@@ -1,0 +1,22 @@
+#Healthhub MindsDB Database
+## We can use the below code for creating db in MindsDB
+
+
+CREATE MODEL health_diagnosis.diagnosis_predictor
+        PREDICT diagnosis
+        USING
+            engine = 'mindsdb',
+            integration = 'health_data',
+            query = 'SELECT * FROM patients';
+
+CREATE project health_diagnosis;
+
+CREATE MODEL health_diagnosis.diagnosis_predictor
+FROM health_data
+  (SELECT age, gender,symptom1,symptom2,symptom3,diagnosis  FROM patients)
+PREDICT diagnosis
+using
+  engine = 'lightwood';
+
+drop model health_diagnosis.diagnosis_predictor;
+show models
